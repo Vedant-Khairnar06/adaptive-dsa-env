@@ -42,7 +42,7 @@ class DSAEnv:
     # QUESTION SAMPLING
     # =========================
     def get_question(self):
-        self.current_task = random.choice(["basic", "debug", "optimize"])
+        self.current_task = ["basic", "debug", "optimize"][self.step_count % 3]
 
         filtered = [
             q for q in self.questions
