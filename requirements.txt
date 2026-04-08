@@ -1,0 +1,5 @@
+openenv-core
+openai>=1.0.0
+gradio
+fastapi
+uvicorn

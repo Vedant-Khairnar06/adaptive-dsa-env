@@ -1,0 +1,94 @@
+[
+  {
+    "question": "Explain binary search like you would in an interview.",
+    "answer": "divide and conquer",
+    "difficulty": "easy",
+    "task": "basic"
+  },
+  {
+    "question": "In a stack implementation, what order are elements removed?",
+    "answer": "lifo",
+    "difficulty": "easy",
+    "task": "basic"
+  },
+  {
+    "question": "In a queue system like a ticket counter, what order is followed?",
+    "answer": "fifo",
+    "difficulty": "easy",
+    "task": "basic"
+  },
+  {
+    "question": "How is an array stored in memory?",
+    "answer": "contiguous memory",
+    "difficulty": "easy",
+    "task": "basic"
+  },
+  {
+    "question": "What is the core idea behind a linked list?",
+    "answer": "nodes connected by pointers",
+    "difficulty": "easy",
+    "task": "basic"
+  },
+
+  {
+    "question": "Fix the issue: A binary search implementation gives wrong results for large inputs.",
+    "answer": "fix binary search bug",
+    "difficulty": "medium",
+    "task": "debug"
+  },
+  {
+    "question": "Debug this: Merge sort is implemented but performance seems incorrect. What should be verified?",
+    "answer": "correct n log n complexity",
+    "difficulty": "medium",
+    "task": "debug"
+  },
+  {
+    "question": "Identify the issue: A recursive function is causing stack overflow. What concept is involved?",
+    "answer": "recursion error",
+    "difficulty": "medium",
+    "task": "debug"
+  },
+  {
+    "question": "Fix the traversal: Graph is supposed to visit level by level but doesn't. What is missing?",
+    "answer": "fix breadth first search",
+    "difficulty": "medium",
+    "task": "debug"
+  },
+  {
+    "question": "Debug the algorithm: Graph traversal is not backtracking properly.",
+    "answer": "fix depth first search",
+    "difficulty": "medium",
+    "task": "debug"
+  },
+
+  {
+    "question": "Optimize this: Repeated subproblems are being recomputed again and again.",
+    "answer": "dynamic programming optimize",
+    "difficulty": "hard",
+    "task": "optimize"
+  },
+  {
+    "question": "Improve efficiency: Avoid recomputation of previously solved results.",
+    "answer": "memoization efficient",
+    "difficulty": "hard",
+    "task": "optimize"
+  },
+  {
+    "question": "Optimize approach: Convert recursive solution into iterative bottom-up method.",
+    "answer": "tabulation better",
+    "difficulty": "hard",
+    "task": "optimize"
+  },
+  {
+    "question": "Improve performance: Always picking local optimum, how can you justify this approach?",
+    "answer": "greedy efficient",
+    "difficulty": "hard",
+    "task": "optimize"
+  },
+  {
+    "question": "Optimize pathfinding: Need fastest shortest path in weighted graph.",
+    "answer": "dijkstra efficient",
+    "difficulty": "hard",
+    "task": "optimize"
+  }
+]

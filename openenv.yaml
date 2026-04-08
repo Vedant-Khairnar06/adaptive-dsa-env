@@ -1,0 +1,23 @@
+version: 1.0
+
+name: dsa-env
+description: DSA reasoning environment with RL feedback
+
+tasks:
+  - name: basic
+    difficulty: easy
+  - name: debug
+    difficulty: medium
+  - name: optimize
+    difficulty: hard
+
+observation_space:
+  question: string
+  difficulty: string
+  score: float
+  task: string
+
+action_space:
+  answer: string
+
+reward_range: [0.0, 1.0]
