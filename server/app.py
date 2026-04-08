@@ -1,7 +1,7 @@
 import sys
 import os
 
-# ✅ FIX: Add root directory to Python path
+# ✅ Fix import path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import subprocess
@@ -56,11 +56,17 @@ with gr.Blocks() as demo:
 
     btn.click(run_inference, outputs=output)
 
-# 🔥 MOUNT GRADIO AT ROOT
+# Mount Gradio
 app = gr.mount_gradio_app(api, demo, path="/")
+
+# =========================
+# ✅ REQUIRED MAIN FUNCTION
+# =========================
+def main():
+    uvicorn.run(app, host="0.0.0.0", port=7860)
 
 # =========================
 # RUN SERVER
 # =========================
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=7860)
+    main()
