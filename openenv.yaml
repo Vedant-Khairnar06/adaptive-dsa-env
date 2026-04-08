@@ -1,21 +1,39 @@
-name: dsa-env
+name: dsa_env
 description: DSA reasoning environment with RL feedback
 
 tasks:
   - name: basic
-    difficulty: easy
+    description: Solve basic DSA questions
   - name: debug
-    difficulty: medium
+    description: Debug incorrect implementations
   - name: optimize
-    difficulty: hard
+    description: Improve algorithm efficiency
 
 observation_space:
-  question: string
-  difficulty: string
-  score: float
-  task: string   # ✅ ADD THIS
+  type: object
+  properties:
+    question:
+      type: string
+    difficulty:
+      type: string
+    score:
+      type: number
+    task:
+      type: string
+  required:
+    - question
+    - difficulty
+    - score
+    - task
 
 action_space:
-  answer: string
+  type: object
+  properties:
+    answer:
+      type: string
+  required:
+    - answer
 
-reward_range: [0.0, 1.0]
+reward_range:
+  min: 0.0
+  max: 1.0
