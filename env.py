@@ -91,7 +91,7 @@ class DSAEnv:
         return re.sub(r'[^a-z0-9 ]', '', text.lower())
 
     # =========================
-    # STEP FUNCTION (FIXED)
+    # STEP FUNCTION (FINAL FIX)
     # =========================
     def step(self, action):
 
@@ -111,47 +111,45 @@ class DSAEnv:
             common_words = correct_words.intersection(answer_words)
 
             # =========================
-            # BASE CONTINUOUS REWARD
+            # ROBUST RATIO (NO COLLAPSE)
             # =========================
             if len(correct_words) == 0:
-                ratio = 0.0
+                ratio = 0.2
             else:
                 ratio = len(common_words) / len(correct_words)
 
-            # smooth reward strictly between (0,1)
-            base_reward = max(0.1, min(0.9, ratio))
+            # prevent extreme collapse
+            ratio = max(0.2, min(0.8, ratio))
 
             # =========================
-            # TASK-SPECIFIC GRADERS ✅
+            # TASK-SPECIFIC GRADERS
             # =========================
-
-            # BASIC → direct QA
             if self.current_task == "basic":
-                reward = base_reward
+                reward = ratio
 
-            # DEBUG → needs reasoning keywords
             elif self.current_task == "debug":
-                keyword_bonus = any(word in ans_clean for word in ["error", "fix", "bug", "correct"])
-                reward = base_reward * 0.7 + (0.2 if keyword_bonus else 0)
+                bonus = 0.1 if any(w in ans_clean for w in ["error", "fix", "bug", "correct"]) else 0
+                reward = ratio + bonus
 
-            # OPTIMIZE → needs efficiency awareness
             elif self.current_task == "optimize":
-                keyword_bonus = any(word in ans_clean for word in ["optimize", "efficient", "log n", "better"])
-                reward = base_reward * 0.6 + (0.25 if keyword_bonus else 0)
-
-            # clamp again to (0,1)
-            reward = max(0.1, min(0.9, reward))
+                bonus = 0.15 if any(w in ans_clean for w in ["optimize", "efficient", "log n", "better"]) else 0
+                reward = ratio + bonus
 
             # =========================
-            # PENALTY
+            # FINAL CLAMP (STRICT RANGE)
+            # =========================
+            reward = max(0.2, min(0.8, reward))
+
+            # =========================
+            # EMPTY ANSWER PENALTY
             # =========================
             if len(action_obj.answer.strip()) == 0:
-                reward = 0.1
+                reward = 0.2
 
             # =========================
-            # DIFFICULTY UPDATE (FIXED)
+            # DIFFICULTY UPDATE
             # =========================
-            if reward > 0.7:
+            if reward > 0.65:
                 self.difficulty = "hard"
             elif reward > 0.4:
                 self.difficulty = "medium"
@@ -164,7 +162,7 @@ class DSAEnv:
             self.current_question = self.get_question()
 
         except Exception as e:
-            reward = 0.1
+            reward = 0.2
             error = str(e)
 
         # =========================
