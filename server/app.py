@@ -1,3 +1,9 @@
+import sys
+import os
+
+# ✅ FIX: Add root directory to Python path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 import subprocess
 import gradio as gr
 from fastapi import FastAPI
