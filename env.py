@@ -34,6 +34,7 @@ class DSAEnv:
         self.current_task = "basic"
         self.step_count = 0
         self.max_steps = max_steps
+        self.task_counter = 0
 
         with open("questions.json") as f:
             self.questions = json.load(f)
@@ -42,7 +43,8 @@ class DSAEnv:
     # QUESTION SAMPLING
     # =========================
     def get_question(self):
-        self.current_task = ["basic", "debug", "optimize"][self.step_count % 3]
+        self.current_task = ["basic", "debug", "optimize"][self.task_counter % 3]
+        self.task_counter += 1
 
         filtered = [
             q for q in self.questions
@@ -159,7 +161,11 @@ class DSAEnv:
             self.score += reward
 
             # next question
-            self.current_question = self.get_question()
+            # keep same task within episode
+            self.current_question = random.choice([
+                q for q in self.questions
+                if q["difficulty"] == self.difficulty and q["task"] == self.current_task
+            ])
 
         except Exception as e:
             reward = 0.2
