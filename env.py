@@ -5,7 +5,7 @@ from pydantic import BaseModel
 
 
 # =========================
-# Pydantic Models (REQUIRED)
+# Pydantic Models
 # =========================
 class Observation(BaseModel):
     question: str
@@ -91,7 +91,7 @@ class DSAEnv:
         return re.sub(r'[^a-z0-9 ]', '', text.lower())
 
     # =========================
-    # STEP FUNCTION
+    # STEP FUNCTION (FIXED)
     # =========================
     def step(self, action):
 
@@ -111,47 +111,49 @@ class DSAEnv:
             common_words = correct_words.intersection(answer_words)
 
             # =========================
-            # BASE REWARD (DEFAULT)
+            # BASE CONTINUOUS REWARD
             # =========================
             if len(correct_words) == 0:
-                reward = 0.0
-            elif len(common_words) / len(correct_words) >= 0.6:
-                reward = 1.0
-            elif len(common_words) > 0:
-                reward = 0.5
+                ratio = 0.0
             else:
-                reward = 0.0
+                ratio = len(common_words) / len(correct_words)
+
+            # smooth reward strictly between (0,1)
+            base_reward = max(0.1, min(0.9, ratio))
 
             # =========================
-            # TASK-SPECIFIC LOGIC 🔥
+            # TASK-SPECIFIC GRADERS ✅
             # =========================
 
-            # BASIC → normal QA
+            # BASIC → direct QA
             if self.current_task == "basic":
-                pass  # keep default
+                reward = base_reward
 
-            # DEBUG → look for correction keywords
+            # DEBUG → needs reasoning keywords
             elif self.current_task == "debug":
-                if any(word in ans_clean for word in ["fix", "correct", "error", "bug"]):
-                    reward = max(reward, 0.7)
+                keyword_bonus = any(word in ans_clean for word in ["error", "fix", "bug", "correct"])
+                reward = base_reward * 0.7 + (0.2 if keyword_bonus else 0)
 
-            # OPTIMIZE → look for efficiency improvements
+            # OPTIMIZE → needs efficiency awareness
             elif self.current_task == "optimize":
-                if any(word in ans_clean for word in ["log n", "efficient", "optimize", "better"]):
-                    reward = max(reward, 0.7)
+                keyword_bonus = any(word in ans_clean for word in ["optimize", "efficient", "log n", "better"])
+                reward = base_reward * 0.6 + (0.25 if keyword_bonus else 0)
+
+            # clamp again to (0,1)
+            reward = max(0.1, min(0.9, reward))
 
             # =========================
             # PENALTY
             # =========================
             if len(action_obj.answer.strip()) == 0:
-                reward = 0.0
+                reward = 0.1
 
             # =========================
-            # DIFFICULTY UPDATE
+            # DIFFICULTY UPDATE (FIXED)
             # =========================
-            if reward >= 0.8:
+            if reward > 0.7:
                 self.difficulty = "hard"
-            elif reward >= 0.5:
+            elif reward > 0.4:
                 self.difficulty = "medium"
             else:
                 self.difficulty = "easy"
@@ -162,7 +164,7 @@ class DSAEnv:
             self.current_question = self.get_question()
 
         except Exception as e:
-            reward = 0.0
+            reward = 0.1
             error = str(e)
 
         # =========================
