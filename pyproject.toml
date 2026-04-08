@@ -1,0 +1,15 @@
+[project]
+name = "dsa-env"
+version = "0.1.0"
+description = "DSA RL Environment for OpenEnv Hackathon"
+dependencies = [
+    "openenv-core",
+    "openai>=1.0.0",
+    "gradio",
+    "fastapi",
+    "uvicorn"
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
