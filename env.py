@@ -42,10 +42,13 @@ class DSAEnv:
     # =========================
     def get_question(self):
         filtered = [q for q in self.questions if q.get("task") == self.current_task]
-        if not filtered:
-            filtered = self.questions
+        diff_filtered = [q for q in filtered if q.get("difficulty") == self.difficulty]
 
-        return random.choice(filtered)
+        final_pool = diff_filtered if diff_filtered else filtered
+        if not final_pool:
+            final_pool = self.questions
+
+        return random.choice(final_pool)
 
     # =========================
     # RESET
