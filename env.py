@@ -27,6 +27,12 @@ class DSAEnv:
         self.step_count = 0
         self.max_steps = max_steps
         self.task_counter = 0
+        self.graders = {
+            "basic": self.grade_basic,
+            "debug": self.grade_debug,
+            "optimize": self.grade_optimize
+        }
+        self.tasks = ["basic", "debug", "optimize"]
 
         with open("questions.json") as f:
             self.questions = json.load(f)
@@ -35,15 +41,7 @@ class DSAEnv:
     # TASK ROTATION (CRITICAL)
     # =========================
     def get_question(self):
-        tasks = ["basic", "debug", "optimize"]
-        self.current_task = tasks[self.task_counter % 3]
-        self.task_counter += 1
-
-        filtered = [
-            q for q in self.questions
-            if q.get("task") == self.current_task
-        ]
-
+        filtered = [q for q in self.questions if q.get("task") == self.current_task]
         if not filtered:
             filtered = self.questions
 
@@ -53,6 +51,10 @@ class DSAEnv:
     # RESET
     # =========================
     def reset(self):
+
+        self.current_task = self.tasks[self.task_counter % len(self.tasks)]
+        self.task_counter += 1
+        
         self.score = 0.0
         self.difficulty = "easy"
         self.step_count = 0
@@ -113,26 +115,23 @@ class DSAEnv:
             # COMPUTE RATIO
             # =========================
             if len(correct_words) == 0:
-                ratio = 0.3
+                ratio = 0.4
             else:
                 ratio = len(common_words) / len(correct_words)
 
-            ratio = max(0.1, min(0.9, ratio))
+            ratio = max(0.15, min(0.85, ratio))
 
             # =========================
             # EXPLICIT GRADER CALL
             # =========================
+            grader = self.graders[self.current_task]
+
             if self.current_task == "basic":
-                reward = self.grade_basic(ratio)
-
-            elif self.current_task == "debug":
-                reward = self.grade_debug(ratio, ans_clean)
-
-            elif self.current_task == "optimize":
-                reward = self.grade_optimize(ratio, ans_clean)
-
+                reward = grader(ratio)
             else:
-                reward = 0.5
+                reward = grader(ratio, ans_clean)
+           
+            reward += random.uniform(0.01, 0.03)
 
             # =========================
             # FINAL CLAMP
