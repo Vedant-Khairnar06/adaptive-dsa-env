@@ -1,91 +1,93 @@
 [
   {
     "question": "Explain binary search like you would in an interview.",
-    "answer": "divide and conquer",
+    "answer": "divide and conquer binary search algorithm",
     "difficulty": "easy",
     "task": "basic"
   },
   {
     "question": "In a stack implementation, what order are elements removed?",
-    "answer": "lifo",
+    "answer": "lifo last in first out stack order",
     "difficulty": "easy",
     "task": "basic"
   },
   {
     "question": "In a queue system like a ticket counter, what order is followed?",
-    "answer": "fifo",
+    "answer": "fifo first in first out queue order",
     "difficulty": "medium",
     "task": "basic"
   },
   {
     "question": "How is an array stored in memory?",
-    "answer": "contiguous memory",
+    "answer": "contiguous memory array storage",
     "difficulty": "medium",
     "task": "basic"
   },
   {
     "question": "What is the core idea behind a linked list?",
-    "answer": "nodes connected by pointers",
+    "answer": "nodes connected by pointers linked list structure",
     "difficulty": "hard",
     "task": "basic"
   },
+
   {
     "question": "Debug this: A loop intended to run 10 times runs 11 times. What is this called?",
-    "answer": "off by one error fix",
+    "answer": "off by one error fix bug correct logic",
     "difficulty": "easy",
     "task": "debug"
   },
   {
     "question": "Fix the issue: A binary search implementation gives wrong results for large inputs.",
-    "answer": "fix binary search bug",
+    "answer": "fix binary search bug error correct logic",
     "difficulty": "medium",
     "task": "debug"
   },
   {
     "question": "Identify the issue: A recursive function is causing stack overflow. What concept is involved?",
-    "answer": "recursion error",
+    "answer": "recursion error stack overflow bug fix",
     "difficulty": "medium",
     "task": "debug"
   },
   {
     "question": "Debug the algorithm: Graph traversal is not backtracking properly.",
-    "answer": "fix depth first search",
+    "answer": "fix depth first search bug error correct traversal",
     "difficulty": "hard",
     "task": "debug"
   },
   {
     "question": "Debug this: Merge sort is implemented but performance seems incorrect. What should be verified?",
-    "answer": "correct n log n complexity",
+    "answer": "verify correct n log n complexity fix bug error",
     "difficulty": "hard",
     "task": "debug"
   },
+
   {
     "question": "Optimize this: You need to check if an element exists in a collection frequently. Use what?",
-    "answer": "hash set efficient",
+    "answer": "hash set efficient lookup optimize performance",
     "difficulty": "easy",
     "task": "optimize"
   },
   {
     "question": "Optimize this: Repeated subproblems are being recomputed again and again.",
-    "answer": "dynamic programming optimize",
+    "answer": "dynamic programming optimize efficient solution",
     "difficulty": "medium",
     "task": "optimize"
   },
   {
     "question": "Improve efficiency: Avoid recomputation of previously solved results.",
-    "answer": "memoization efficient",
+    "answer": "memoization efficient optimize performance",
     "difficulty": "medium",
     "task": "optimize"
   },
   {
     "question": "Optimize approach: Convert recursive solution into iterative bottom-up method.",
-    "answer": "tabulation better",
+    "answer": "tabulation better efficient optimize dynamic programming",
     "difficulty": "hard",
     "task": "optimize"
   },
   {
     "question": "Optimize pathfinding: Need fastest shortest path in weighted graph.",
-    "answer": "dijkstra efficient",
+    "answer": "dijkstra shortest path efficient optimize algorithm",
     "difficulty": "hard",
     "task": "optimize"
   }
