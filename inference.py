@@ -44,15 +44,17 @@ def get_action(question):
             .replace(" ", "_")
         )
     except Exception:
-        return "api_error"
+        return "default_answer"
 
 # =========================
 # MAIN LOOP
 # =========================
 def main():
     # 🔥 Run exactly 3 episodes (one per task)
+    env = DSAEnv()
+    
     for i in range(3):
-        env = DSAEnv()  # ✅ fresh env per task
+          # ✅ fresh env per task
 
         try:
             obs = env.reset()
